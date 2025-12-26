@@ -5,8 +5,13 @@
 <p align="center">
 <a href="https://trendshift.io/repositories/15323" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15323" alt="GeeeekExplorer%2Fnano-vllm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </p>
-
 # Nano-vLLM
+
+> nanovllm is powerful，add a server wrapper for local  .
+
+<p align="center">
+<img width="500" src="assets/server.png">
+</p>
 
 A lightweight vLLM implementation built from scratch.
 
