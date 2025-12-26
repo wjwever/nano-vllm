@@ -15,7 +15,7 @@ class Sequence:
     block_size = 256
     counter = count()
 
-    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
+    def __init__(self, token_ids: list[int], sampling_params = SamplingParams(), uid:str=""):
         self.seq_id = next(Sequence.counter)
         self.status = SequenceStatus.WAITING
         self.token_ids = copy(token_ids)
@@ -27,6 +27,9 @@ class Sequence:
         self.temperature = sampling_params.temperature
         self.max_tokens = sampling_params.max_tokens
         self.ignore_eos = sampling_params.ignore_eos
+        # added
+        self.uid = uid
+        self.last_index = self.num_prompt_tokens 
 
     def __len__(self):
         return self.num_tokens
@@ -49,6 +52,20 @@ class Sequence:
     @property
     def completion_token_ids(self):
         return self.token_ids[self.num_prompt_tokens:]
+    
+    def inc_text(self, tokenizer) -> str:
+        text = tokenizer.decode(self.token_ids[self.last_index:])
+        if text.endswith('\ufffd'):
+            return "" # 暂缓输出，等待下一个 token 补全字节
+        try:
+            # 尝试解码，如果成功说明是完整字符
+            text.encode('utf-8').decode('utf-8')
+            self.last_index = self.num_tokens
+            return text
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            return "    "
+
+
 
     @property
     def num_cached_blocks(self):
