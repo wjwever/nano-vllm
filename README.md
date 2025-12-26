@@ -7,7 +7,7 @@
 </p>
 # Nano-vLLM
 
-> nanovllm is powerful，add a server wrapper for local  .
+> nanovllm is powerful，add a server wrapper for local usage .
 
 <p align="center">
 <img width="500" src="assets/server.png">
